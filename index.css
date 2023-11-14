@@ -1,0 +1,227 @@
+:root {
+  --primary-color: #5D93E1;
+  --text-color: #333;
+  --background-color: #f5f7fa;
+  --input-background: #fff;
+  --input-border: #ddd;
+  --button-hover: #4A81D4;
+  --readonly-background: #f3f3f3;
+  --footer-background: #fff; /* Added variable for footer */
+}
+
+[data-theme="dark"] {
+  --primary-color: #4A81D4;
+  --text-color: #f7f7f7;
+  --background-color: #1a1a1a;
+  --input-background: #070707;
+  --input-border: #fcf7f7;
+  --button-hover: #333;
+  --readonly-background: #2a2a2a;
+  --footer-background: #222; /* Dark theme color for footer */
+}
+
+html, body {
+  font-family: 'Lato', sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Fill the viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.container {
+  max-width: 1200px; /* or 80%, depending on your design requirements */
+  width: 100%; /* Use 100% for smaller screens */
+  min-height: 100px; /* Ensure the container is visible */
+  margin: auto; /* Center it on the page */
+  padding: 20px;
+  background: var(--input-background); /* Visible against the body background */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  overflow: auto; /* Scrollable if content overflows */
+  display: flex; /* Use flex to contain child elements */
+  flex-direction: column; /* Stack children vertically */
+}
+.input-group {
+  margin-bottom: 1em;
+  z-index: 20;
+}
+.input-group, footer {
+  background: #fff; /* 设置一个背景色 */
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: .5em;
+  color: #333;
+  font-size: 1em;
+  font-weight: 700;
+}
+.input-group input, .input-group textarea, .input-group button {
+  background: var(--input-background);
+  border: 1px solid var(--input-border);
+  width: 100%;
+  padding: 1em;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-family: 'Lato', sans-serif;
+}
+.input-group input{
+  color: #555;
+}
+
+
+/* Additional styling for a more polished look */
+.input-group {
+  background: var(--input-background);
+  margin-bottom: 20px;
+}
+
+.input-group textarea[readonly] {
+  background-color: var(--readonly-background);
+  color: #555;
+}
+
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5em;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.input-group input[type="text"],
+.input-group input[type="file"],
+.input-group textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Make sure padding doesn't affect the overall width */
+  font-family: 'Lato', sans-serif;
+}
+
+.input-group input[type="file"] {
+  border: none;
+}
+
+
+.input-group button {
+  background-color: #5D93E1;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: 'Lato', sans-serif;
+}
+.input-group button:hover {
+  background-color: #4A81D4;
+}
+
+footer {
+  text-align: center;
+  background: var(--footer-background);
+  color: var(--text-color);
+  margin-top: 50px;
+  font-size: 0.8em;
+}
+
+.action-buttons button {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+
+.button {
+  background-color: #5D93E1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.button:hover {
+  background-color: var(--button-hover);
+}
+.theme-switch-wrapper {
+  position: absolute; /* Change to absolute if you want it floating outside the flow */
+  top: 20px; /* Adjust as needed */
+  right: 40px; /* Adjust as needed */
+  z-index: 1000; /* Ensure it's above all other content */
+}
+.slider {
+  background-color: var(--button-hover);
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 2px;
+  width: 35px;
+  transition: .4s;
+}
+
+.slider:before {
+  background-color: white;
+  bottom: 4px;
+  content: "";
+  height: 15px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 15px;
+}
+
+input:checked + .slider {
+  background-color: white;
+}
+
+input:checked + .slider:before {
+  background-color: var(--background-color);
+  transform: translateX(13px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    min-width: auto;
+    width: 90%;
+  }
+  
+  .input-group {
+    flex-direction: column;
+  }
+  
+  .action-buttons button {
+    width: 100%;
+    margin-top: 10px;
+    margin-right: 0;
+  }
+}

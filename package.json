@@ -1,0 +1,26 @@
+{
+  "name": "gpt-audio",
+  "version": "0.0.5",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eepson123tw/GPT-Audio.git"
+  },
+  "keywords": [
+    "gpt",
+    "audio"
+  ],
+  "author": "Allen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eepson123tw/GPT-Audio/issues"
+  },
+  "homepage": "https://github.com/eepson123tw/GPT-Audio#readme",
+  "dependencies": {
+    "github-markdown-css": "^5.4.0"
+  }
+}
