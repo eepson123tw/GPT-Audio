@@ -3,41 +3,38 @@
 let transcriptionText = ''
 let errorMessages = document.getElementById('error')
 const md = window.markdownit()
+const transBtn = document.getElementById('translate-btn')
+const timeStampBtn = document.getElementById('timeStamp-btn')
+const convertBtn = document.getElementById('convert-md-btn')
 
-document
-  .getElementById('checkbox')
-  .addEventListener('change', function (event) {
-    // @ts-ignore
-    if (event.target.checked) {
-      document.body.setAttribute('data-theme', 'dark')
-    } else {
-      document.body.setAttribute('data-theme', 'light')
-    }
-  })
+const checkbox = document.getElementById('checkbox')
+
+checkbox.addEventListener('change', function (event) {
+  const theme = event.target.checked ? 'dark' : 'light'
+  document.body.setAttribute('data-theme', theme)
+})
 
 const getApiKey = () => {
-  // @ts-ignore
   const apiKey = document.getElementById('api-key').value
   localStorage.setItem('apiKey', apiKey)
   return apiKey
 }
 
-const transcribeAudio = () => {
+const transcribeAudio = (e, isTimeStamp = false) => {
   const audioInput = document.getElementById('audioInput')
   const transcriptionResult = document.getElementById('translation')
 
-  // @ts-ignore
+  transBtn.disabled = isTimeStamp
+  timeStampBtn.disabled = !isTimeStamp
   if (!audioInput.files.length) {
     alert('請先選擇一個音訊檔案。')
     return
   }
 
   const formData = new FormData()
-  // @ts-ignore
   formData.append('file', audioInput.files[0])
   formData.append('model', 'whisper-1')
-
-  // @ts-ignore
+  isTimeStamp && formData.append('response_format', 'srt')
   axios
     .post('https://api.openai.com/v1/audio/transcriptions', formData, {
       headers: {
@@ -46,12 +43,10 @@ const transcribeAudio = () => {
       }
     })
     .then((response) => {
-      transcriptionText = response.data.text
-      // @ts-ignore
+      transcriptionText = isTimeStamp ? response.data : response.data.text
       transcriptionResult.textContent = transcriptionText
     })
     .catch((error) => {
-      // @ts-ignore
       errorMessages.textContent = '轉錄錯誤: ' + error
     })
 }
@@ -65,7 +60,6 @@ const summarizeText = () => {
     return
   }
 
-  // @ts-ignore
   axios
     .post(
       'https://api.openai.com/v1/chat/completions',
@@ -89,7 +83,6 @@ const summarizeText = () => {
           },
           {
             role: 'user',
-            // @ts-ignore
             content: transcriptionResult ? transcriptionResult.value : ''
           }
         ]
@@ -103,20 +96,15 @@ const summarizeText = () => {
     )
     .then((response) => {
       const summary = md.render(response.data.choices[0].message.content)
-      // @ts-ignore
       summaryResult.innerHTML = summary
     })
     .catch((error) => {
-      // @ts-ignore
       errorMessages.textContent = '總結錯誤: ' + error
     })
 }
 
-// @ts-ignore
-document
-  .getElementById('translate-btn')
-  .addEventListener('click', transcribeAudio)
-// @ts-ignore
-document
-  .getElementById('convert-md-btn')
-  .addEventListener('click', summarizeText)
+transBtn.addEventListener('click', (e) => transcribeAudio(e))
+
+timeStampBtn.addEventListener('click', (e) => transcribeAudio(e, true))
+
+convertBtn.addEventListener('click', summarizeText)
