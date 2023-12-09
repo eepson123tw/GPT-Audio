@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/eepson123tw/GPT-Audio#readme",
   "dependencies": {
-    "github-markdown-css": "^5.4.0"
+    "github-markdown-css": "^5.4.0",
+    "ytdl-core": "^4.11.5"
   }
 }
